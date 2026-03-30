@@ -99,13 +99,16 @@ class CeleryConfig:
 
 CELERY_CONFIG = CeleryConfig
 
+# Rerverse proxy configuration
+# ENABLE_PROXY_FIX = True
+
 FEATURE_FLAGS = {
     "ALERT_REPORTS": True,
     "SSH_TUNNELING": True,
     "RLS_IN_SQLLAB": True,
     "DASHBOARD_RBAC": True,
     "TAGGING_SYSTEM": True,
-    "DATASET_FOLDERS": True
+    "DATASET_FOLDERS": True,
 }
 ALERT_REPORTS_NOTIFICATION_DRY_RUN = True
 WEBDRIVER_BASEURL = f"http://superset_app{os.environ.get('SUPERSET_APP_ROOT', '/')}/"  # When using docker compose baseurl should be http://superset_nginx{ENV{BASEPATH}}/  # noqa: E501
@@ -147,3 +150,31 @@ try:
 except ImportError:
     logger.info("Using default Docker config...")
 
+# Set the authentication type to OAuth
+from flask_appbuilder.security.manager import AUTH_OAUTH
+from custom_sso_security_manager import CustomSsoSecurityManager
+
+AUTH_TYPE = AUTH_OAUTH
+
+OAUTH_PROVIDERS = [
+    {
+        "name": "google",
+        "token_key": "access_token",
+        "icon": "fa-google",
+        "remote_app": {
+            "client_id": os.getenv("GOOGLE_OAUTH_CLIENT_ID"),
+            "client_secret": os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
+            "client_kwargs": {"scope": "openid email profile"},
+            "api_base_url": "https://www.googleapis.com/oauth2/v2/",
+            "server_metadata_url": "https://accounts.google.com/.well-known/openid-configuration",
+        },
+    }
+]
+
+# Disallow user registration, users must be created using superset fab create-user
+AUTH_USER_REGISTRATION = False
+
+# The default user self registration role (Gamma for dashboard view)
+AUTH_USER_REGISTRATION_ROLE = "Public"
+
+CUSTOM_SECURITY_MANAGER = CustomSsoSecurityManager
