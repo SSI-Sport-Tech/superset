@@ -150,6 +150,9 @@ try:
 except ImportError:
     logger.info("Using default Docker config...")
 
+# If reverse proxy, set to true
+ENABLE_PROXY_FIX = True
+
 # Set the authentication type to OAuth
 from flask_appbuilder.security.manager import AUTH_OAUTH
 from custom_sso_security_manager import CustomSsoSecurityManager
@@ -164,7 +167,7 @@ OAUTH_PROVIDERS = [
         "remote_app": {
             "client_id": os.getenv("GOOGLE_OAUTH_CLIENT_ID"),
             "client_secret": os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
-            "client_kwargs": {"scope": "openid email profile"},
+            "client_kwargs": {"scope": "openid email profile name"},
             "api_base_url": "https://www.googleapis.com/oauth2/v2/",
             "server_metadata_url": "https://accounts.google.com/.well-known/openid-configuration",
         },
