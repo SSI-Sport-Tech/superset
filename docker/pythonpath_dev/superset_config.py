@@ -167,7 +167,7 @@ OAUTH_PROVIDERS = [
         "remote_app": {
             "client_id": os.getenv("GOOGLE_OAUTH_CLIENT_ID"),
             "client_secret": os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
-            "client_kwargs": {"scope": "openid email profile name"},
+            "client_kwargs": {"scope": "openid email profile"},
             "api_base_url": "https://www.googleapis.com/oauth2/v2/",
             "server_metadata_url": "https://accounts.google.com/.well-known/openid-configuration",
         },

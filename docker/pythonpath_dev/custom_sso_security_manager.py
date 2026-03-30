@@ -13,6 +13,6 @@ class CustomSsoSecurityManager(SupersetSecurityManager):
                 "email": me["email"],
                 "id": me["id"],
                 "username": me["email"],
-                "first_name": me["given_name"],
-                "last_name": me["family_name"],
+                "first_name": me.get("given_name", me["name"]),
+                "last_name": me.get("family_name", ""),
             }
