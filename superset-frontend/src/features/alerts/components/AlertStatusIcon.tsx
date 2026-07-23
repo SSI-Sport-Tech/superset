@@ -16,7 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+<<<<<<< HEAD
 import { t, SupersetTheme, useTheme, css } from '@superset-ui/core';
+=======
+import { t } from '@apache-superset/core/translation';
+import { SupersetTheme, useTheme, css } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { Tooltip } from '@superset-ui/core/components';
 import { Icons } from '@superset-ui/core/components/Icons';
 import { AlertState } from '../types';

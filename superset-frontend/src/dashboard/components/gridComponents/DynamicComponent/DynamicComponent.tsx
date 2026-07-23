@@ -17,11 +17,16 @@
  * under the License.
  */
 import { FC, Suspense } from 'react';
-import { DashboardComponentMetadata, JsonObject, t } from '@superset-ui/core';
+import { t } from '@apache-superset/core/translation';
+import { DashboardComponentMetadata, JsonObject } from '@superset-ui/core';
 import backgroundStyleOptions from 'src/dashboard/util/backgroundStyleOptions';
 import cx from 'classnames';
 import { shallowEqual, useSelector } from 'react-redux';
 import { ResizeCallback, ResizeStartCallback } from 're-resizable';
+<<<<<<< HEAD
+=======
+import type { ConnectDragSource } from 'react-dnd';
+>>>>>>> 6.1.0
 import { Draggable } from '../../dnd/DragDroppable';
 import { COLUMN_TYPE, ROW_TYPE } from '../../../util/componentTypes';
 import WithPopoverMenu from '../../menu/WithPopoverMenu';
@@ -109,9 +114,7 @@ const DynamicComponent: FC<DynamicComponentProps> = ({
 
   return (
     <Draggable
-      // @ts-ignore
       component={component}
-      // @ts-ignore
       parentComponent={parentComponent}
       orientation={parentComponent.type === ROW_TYPE ? 'column' : 'row'}
       index={index}
@@ -119,7 +122,7 @@ const DynamicComponent: FC<DynamicComponentProps> = ({
       onDrop={handleComponentDrop}
       editMode={editMode}
     >
-      {({ dragSourceRef }) => (
+      {({ dragSourceRef }: { dragSourceRef: ConnectDragSource }) => (
         <WithPopoverMenu
           menuItems={[
             <BackgroundStyleDropdown

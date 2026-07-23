@@ -31,6 +31,10 @@ const mockEntries = [
   { time: '2023-01-01', sales: 100, price: 10 },
 ];
 
+<<<<<<< HEAD
+=======
+// eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
 describe('ValueCell', () => {
   test('should render simple value without special column type', () => {
     render(

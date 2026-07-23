@@ -18,6 +18,10 @@
  */
 import { colorFromBounds } from './colorUtils';
 
+<<<<<<< HEAD
+=======
+// eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
 describe('colorFromBounds', () => {
   test('should return null when no bounds are provided', () => {
     expect(colorFromBounds(50)).toBeNull();

@@ -132,6 +132,10 @@ const renderWithRedux = (component: React.ReactElement) =>
     },
   });
 
+<<<<<<< HEAD
+=======
+// eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
 describe('DynamicComponent', () => {
   beforeEach(() => {
     jest.clearAllMocks();

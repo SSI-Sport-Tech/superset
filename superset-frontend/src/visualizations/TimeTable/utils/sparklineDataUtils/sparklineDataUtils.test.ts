@@ -32,6 +32,10 @@ const mockEntries = [
   { time: '2023-01-04', sales: 400 },
 ];
 
+<<<<<<< HEAD
+=======
+// eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
 describe('sparklineDataUtils', () => {
   test('parseTimeRatio should parse string values', () => {
     expect(parseTimeRatio('5')).toBe(5);

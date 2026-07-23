@@ -18,7 +18,12 @@
  */
 import { useMemo, ReactNode } from 'react';
 import { InfoTooltip, TableView } from '@superset-ui/core/components';
+<<<<<<< HEAD
 import { styled, t } from '@superset-ui/core';
+=======
+import { t } from '@apache-superset/core/translation';
+import { styled } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { sortNumberWithMixedTypes, processTimeTableData } from './utils';
 import { ValueCell, LeftCell, Sparkline } from './components';
 import type { TimeTableProps } from './types';

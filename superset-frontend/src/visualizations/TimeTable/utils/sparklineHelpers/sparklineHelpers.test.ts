@@ -24,7 +24,13 @@ import {
   transformChartData,
 } from './sparklineHelpers';
 
+<<<<<<< HEAD
 describe('sparklineHelpers', () => {
+=======
+// eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+describe('sparklineHelpers', () => {
+  // eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
   describe('getSparklineTextWidth', () => {
     test('should return a positive number for text width', () => {
       const result = getSparklineTextWidth('123.45');
@@ -39,6 +45,10 @@ describe('sparklineHelpers', () => {
     });
   });
 
+<<<<<<< HEAD
+=======
+  // eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
   describe('isValidBoundValue', () => {
     test('should return true for valid numbers', () => {
       expect(isValidBoundValue(0)).toBe(true);
@@ -56,6 +66,10 @@ describe('sparklineHelpers', () => {
     });
   });
 
+<<<<<<< HEAD
+=======
+  // eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
   describe('getDataBounds', () => {
     test('should return correct min and max for valid data', () => {
       const data = [10, 5, 20, 15];
@@ -90,6 +104,10 @@ describe('sparklineHelpers', () => {
     });
   });
 
+<<<<<<< HEAD
+=======
+  // eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
   describe('createYScaleConfig', () => {
     test('should use data bounds when no axis bounds provided', () => {
       const validData = [10, 20, 30];
@@ -144,6 +162,10 @@ describe('sparklineHelpers', () => {
     });
   });
 
+<<<<<<< HEAD
+=======
+  // eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
   describe('transformChartData', () => {
     test('should transform data with indices', () => {
       const data = [10, 20, 30];

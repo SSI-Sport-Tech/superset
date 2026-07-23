@@ -17,15 +17,30 @@
  * under the License.
  */
 import { ReactElement, useMemo } from 'react';
+<<<<<<< HEAD
 import { formatNumber, formatTime, useTheme } from '@superset-ui/core';
+=======
+import { formatNumber, formatTime } from '@superset-ui/core';
+import { useTheme } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { GridRows } from '@visx/grid';
 import { scaleLinear } from '@visx/scale';
 import {
   Axis,
   LineSeries,
+<<<<<<< HEAD
   Tooltip,
   XYChart,
   buildChartTheme,
+=======
+  BarSeries,
+  AreaSeries,
+  Tooltip,
+  XYChart,
+  buildChartTheme,
+  type SeriesProps,
+  AxisScale,
+>>>>>>> 6.1.0
 } from '@visx/xychart';
 import { extendedDayjs } from '@superset-ui/core/utils/dates';
 import {
@@ -33,6 +48,10 @@ import {
   createYScaleConfig,
   transformChartData,
 } from '../../utils';
+<<<<<<< HEAD
+=======
+import { SparkType } from '../../types';
+>>>>>>> 6.1.0
 
 interface Entry {
   time: string;
@@ -51,6 +70,10 @@ interface SparklineCellProps {
   showYAxis?: boolean;
   width?: number;
   yAxisBounds?: [number | undefined, number | undefined];
+<<<<<<< HEAD
+=======
+  sparkType?: SparkType;
+>>>>>>> 6.1.0
 }
 
 const MARGIN = {
@@ -71,6 +94,10 @@ const SparklineCell = ({
   yAxisBounds = [undefined, undefined],
   showYAxis = false,
   entries = [],
+<<<<<<< HEAD
+=======
+  sparkType = 'line',
+>>>>>>> 6.1.0
 }: SparklineCellProps): ReactElement => {
   const theme = useTheme();
 
@@ -127,6 +154,20 @@ const SparklineCell = ({
   const xAccessor = (d: { x: number; y: number }) => d.x;
   const yAccessor = (d: { x: number; y: number }) => d.y;
 
+<<<<<<< HEAD
+=======
+  const chartSeriesMap: Record<
+    SparkType,
+    (props: SeriesProps<AxisScale, AxisScale, object>) => JSX.Element
+  > = {
+    line: LineSeries,
+    bar: BarSeries,
+    area: AreaSeries,
+  };
+
+  const SeriesComponent = chartSeriesMap[sparkType] || LineSeries;
+
+>>>>>>> 6.1.0
   if (validData.length === 0) return <div style={{ width, height }} />;
 
   return (
@@ -165,7 +206,11 @@ const SparklineCell = ({
             />
           </>
         )}
+<<<<<<< HEAD
         <LineSeries
+=======
+        <SeriesComponent
+>>>>>>> 6.1.0
           data={chartData}
           dataKey={dataKey}
           xAccessor={xAccessor}

@@ -20,7 +20,7 @@ import { getColorBreakpointsBuckets, getBreakPoints } from './utils';
 import { ColorBreakpointType } from './types';
 
 describe('getColorBreakpointsBuckets', () => {
-  it('returns correct buckets for multiple breakpoints', () => {
+  test('returns correct buckets for multiple breakpoints', () => {
     const color_breakpoints: ColorBreakpointType[] = [
       { minValue: 0, maxValue: 10, color: { r: 255, g: 0, b: 0, a: 100 } },
       { minValue: 11, maxValue: 20, color: { r: 0, g: 255, b: 0, a: 100 } },
@@ -34,12 +34,12 @@ describe('getColorBreakpointsBuckets', () => {
     });
   });
 
-  it('returns empty object if color_breakpoints is empty', () => {
+  test('returns empty object if color_breakpoints is empty', () => {
     const result = getColorBreakpointsBuckets([]);
     expect(result).toEqual({});
   });
 
-  it('returns empty object if color_breakpoints is missing', () => {
+  test('returns empty object if color_breakpoints is missing', () => {
     const result = getColorBreakpointsBuckets({} as any);
     expect(result).toEqual({});
   });
@@ -49,7 +49,11 @@ describe('getBreakPoints', () => {
   const accessor = (d: any) => d.value;
 
   describe('automatic breakpoint generation', () => {
+<<<<<<< HEAD
     it('generates correct number of breakpoints for given buckets', () => {
+=======
+    test('generates correct number of breakpoints for given buckets', () => {
+>>>>>>> 6.1.0
       const features = [{ value: 0 }, { value: 50 }, { value: 100 }];
 
       const breakPoints = getBreakPoints(
@@ -62,7 +66,11 @@ describe('getBreakPoints', () => {
       expect(breakPoints.every(bp => typeof bp === 'string')).toBe(true);
     });
 
+<<<<<<< HEAD
     it('ensures data range is fully covered', () => {
+=======
+    test('ensures data range is fully covered', () => {
+>>>>>>> 6.1.0
       // Test various data ranges to ensure min/max are always included
       const testCases = [
         { data: [0, 100], buckets: 5 },
@@ -95,7 +103,11 @@ describe('getBreakPoints', () => {
       });
     });
 
+<<<<<<< HEAD
     it('handles uniform distribution correctly', () => {
+=======
+    test('handles uniform distribution correctly', () => {
+>>>>>>> 6.1.0
       const features = [
         { value: 0 },
         { value: 25 },
@@ -124,7 +136,11 @@ describe('getBreakPoints', () => {
       });
     });
 
+<<<<<<< HEAD
     it('handles single value datasets', () => {
+=======
+    test('handles single value datasets', () => {
+>>>>>>> 6.1.0
       const features = [{ value: 42 }, { value: 42 }, { value: 42 }];
 
       const breakPoints = getBreakPoints(
@@ -140,7 +156,11 @@ describe('getBreakPoints', () => {
       expect(lastBp).toBeGreaterThanOrEqual(42);
     });
 
+<<<<<<< HEAD
     it('preserves appropriate precision for different scales', () => {
+=======
+    test('preserves appropriate precision for different scales', () => {
+>>>>>>> 6.1.0
       const testCases = [
         { data: [0, 1], expectedMaxPrecision: 1 }, // 0.0, 0.2, 0.4...
         { data: [0, 0.1], expectedMaxPrecision: 2 }, // 0.00, 0.02...
@@ -165,7 +185,11 @@ describe('getBreakPoints', () => {
       });
     });
 
+<<<<<<< HEAD
     it('handles negative values correctly', () => {
+=======
+    test('handles negative values correctly', () => {
+>>>>>>> 6.1.0
       const features = [
         { value: -100 },
         { value: -50 },
@@ -194,7 +218,11 @@ describe('getBreakPoints', () => {
       }
     });
 
+<<<<<<< HEAD
     it('handles mixed integer and decimal values', () => {
+=======
+    test('handles mixed integer and decimal values', () => {
+>>>>>>> 6.1.0
       const features = [
         { value: 1 },
         { value: 2.5 },
@@ -216,7 +244,11 @@ describe('getBreakPoints', () => {
       expect(lastBp).toBeGreaterThanOrEqual(8.2);
     });
 
+<<<<<<< HEAD
     it('uses floor/ceil for boundary breakpoints to ensure inclusion', () => {
+=======
+    test('uses floor/ceil for boundary breakpoints to ensure inclusion', () => {
+>>>>>>> 6.1.0
       // Test that Math.floor and Math.ceil are used for boundaries
       // This ensures all data points fall within the breakpoint range
 
@@ -251,7 +283,11 @@ describe('getBreakPoints', () => {
       });
     });
 
+<<<<<<< HEAD
     it('prevents minimum value exclusion edge case', () => {
+=======
+    test('prevents minimum value exclusion edge case', () => {
+>>>>>>> 6.1.0
       // Specific edge case test for minimum value exclusion
       // Tests the exact scenario where rounding would exclude the min value
 
@@ -279,7 +315,11 @@ describe('getBreakPoints', () => {
       expect(breakPoints[0]).toMatch(/^3(\.0*)?$/);
     });
 
+<<<<<<< HEAD
     it('prevents maximum value exclusion edge case', () => {
+=======
+    test('prevents maximum value exclusion edge case', () => {
+>>>>>>> 6.1.0
       // Specific edge case test for maximum value exclusion
       // Tests the exact scenario where rounding would exclude the max value
 
@@ -309,7 +349,11 @@ describe('getBreakPoints', () => {
   });
 
   describe('custom breakpoints', () => {
+<<<<<<< HEAD
     it('uses custom breakpoints when provided', () => {
+=======
+    test('uses custom breakpoints when provided', () => {
+>>>>>>> 6.1.0
       const features = [{ value: 5 }, { value: 15 }, { value: 25 }];
       const customBreakPoints = ['0', '10', '20', '30', '40'];
 
@@ -322,7 +366,11 @@ describe('getBreakPoints', () => {
       expect(breakPoints).toEqual(['0', '10', '20', '30', '40']);
     });
 
+<<<<<<< HEAD
     it('sorts custom breakpoints in ascending order', () => {
+=======
+    test('sorts custom breakpoints in ascending order', () => {
+>>>>>>> 6.1.0
       const features = [{ value: 5 }];
       const customBreakPoints = ['30', '10', '0', '20'];
 
@@ -335,7 +383,11 @@ describe('getBreakPoints', () => {
       expect(breakPoints).toEqual(['0', '10', '20', '30']);
     });
 
+<<<<<<< HEAD
     it('ignores num_buckets when custom breakpoints are provided', () => {
+=======
+    test('ignores num_buckets when custom breakpoints are provided', () => {
+>>>>>>> 6.1.0
       const features = [{ value: 5 }];
       const customBreakPoints = ['0', '50', '100'];
 
@@ -351,7 +403,11 @@ describe('getBreakPoints', () => {
   });
 
   describe('edge cases and error handling', () => {
+<<<<<<< HEAD
     it('returns empty array when features are undefined', () => {
+=======
+    test('returns empty array when features are undefined', () => {
+>>>>>>> 6.1.0
       const breakPoints = getBreakPoints(
         { break_points: [], num_buckets: '5' },
         undefined as any,
@@ -361,7 +417,11 @@ describe('getBreakPoints', () => {
       expect(breakPoints).toEqual([]);
     });
 
+<<<<<<< HEAD
     it('returns empty array when features is null', () => {
+=======
+    test('returns empty array when features is null', () => {
+>>>>>>> 6.1.0
       const breakPoints = getBreakPoints(
         { break_points: [], num_buckets: '5' },
         null as any,
@@ -371,7 +431,11 @@ describe('getBreakPoints', () => {
       expect(breakPoints).toEqual([]);
     });
 
+<<<<<<< HEAD
     it('returns empty array when all values are undefined', () => {
+=======
+    test('returns empty array when all values are undefined', () => {
+>>>>>>> 6.1.0
       const features = [
         { value: undefined },
         { value: undefined },
@@ -387,7 +451,11 @@ describe('getBreakPoints', () => {
       expect(breakPoints).toEqual([]);
     });
 
+<<<<<<< HEAD
     it('handles empty features array', () => {
+=======
+    test('handles empty features array', () => {
+>>>>>>> 6.1.0
       const breakPoints = getBreakPoints(
         { break_points: [], num_buckets: '5' },
         [],
@@ -397,7 +465,11 @@ describe('getBreakPoints', () => {
       expect(breakPoints).toEqual([]);
     });
 
+<<<<<<< HEAD
     it('handles string values that can be parsed as numbers', () => {
+=======
+    test('handles string values that can be parsed as numbers', () => {
+>>>>>>> 6.1.0
       const features = [
         { value: '10.5' },
         { value: '20.3' },
@@ -418,7 +490,11 @@ describe('getBreakPoints', () => {
       expect(lastBp).toBeGreaterThanOrEqual(30.7);
     });
 
+<<<<<<< HEAD
     it('uses default number of buckets when not specified', () => {
+=======
+    test('uses default number of buckets when not specified', () => {
+>>>>>>> 6.1.0
       const features = [{ value: 0 }, { value: 100 }];
 
       const breakPoints = getBreakPoints(
@@ -431,7 +507,11 @@ describe('getBreakPoints', () => {
       expect(breakPoints).toHaveLength(11); // 10 buckets = 11 breakpoints
     });
 
+<<<<<<< HEAD
     it('handles Infinity and -Infinity values', () => {
+=======
+    test('handles Infinity and -Infinity values', () => {
+>>>>>>> 6.1.0
       const features = [
         { value: -Infinity },
         { value: 0 },
@@ -450,7 +530,11 @@ describe('getBreakPoints', () => {
   });
 
   describe('breakpoint boundaries validation', () => {
+<<<<<<< HEAD
     it('ensures no data points fall outside breakpoint range', () => {
+=======
+    test('ensures no data points fall outside breakpoint range', () => {
+>>>>>>> 6.1.0
       // Generate random test data
       const generateRandomData = (count: number, min: number, max: number) => {
         const data = [];

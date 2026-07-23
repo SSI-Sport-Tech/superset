@@ -16,7 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+<<<<<<< HEAD
 import { t, validateNonEmpty } from '@superset-ui/core';
+=======
+import { t } from '@apache-superset/core/translation';
+import { validateNonEmpty } from '@superset-ui/core';
+>>>>>>> 6.1.0
 import {
   ControlPanelConfig,
   getStandardizedControls,

@@ -36,7 +36,7 @@
  * under the License.
  */
 import { ReactElement } from 'react';
-import { styled } from '@superset-ui/core';
+import { styled } from '@apache-superset/core/theme';
 import {
   IconNameType,
   Icons,
@@ -69,7 +69,12 @@ export function ActionsBar({ actions }: ActionsBarProps) {
         return (
           <ActionButton
             key={tooltip ? undefined : index}
+<<<<<<< HEAD
             icon={<IconComponent />}
+=======
+            icon={<IconComponent iconSize="l" />}
+            tooltip={tooltip}
+>>>>>>> 6.1.0
             {...rest}
           />
         );

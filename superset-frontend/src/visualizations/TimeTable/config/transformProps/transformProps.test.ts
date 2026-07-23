@@ -20,9 +20,15 @@ import {
   DatasourceType,
   ChartProps,
   Behavior,
+<<<<<<< HEAD
   supersetTheme,
   Metric,
 } from '@superset-ui/core';
+=======
+  Metric,
+} from '@superset-ui/core';
+import { supersetTheme } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { transformProps, TableChartProps } from './transformProps';
 
 interface ExtendedMetric extends Omit<Metric, 'uuid'> {
@@ -127,6 +133,10 @@ function createMockChartProps(
   return tableChartProps;
 }
 
+<<<<<<< HEAD
+=======
+// eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
 describe('TimeTable transformProps', () => {
   test('should transform props correctly for metric rows', () => {
     const props = createMockChartProps();

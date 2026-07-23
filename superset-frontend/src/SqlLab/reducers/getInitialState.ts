@@ -16,7 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+<<<<<<< HEAD
 import { t } from '@superset-ui/core';
+=======
+import { t } from '@apache-superset/core/translation';
+>>>>>>> 6.1.0
 import { nanoid } from 'nanoid';
 import type { BootstrapData } from 'src/types/bootstrapTypes';
 import type { InitialState } from 'src/hooks/apiResources/sqlLab';
@@ -115,7 +119,7 @@ export default function getInitialState({
     };
   });
   const tabHistory = activeTab ? [activeTab.id.toString()] : [];
-  let lastUpdatedActiveTab = activeTab ? activeTab.id.toString() : '';
+  const lastUpdatedActiveTab = activeTab ? activeTab.id.toString() : '';
   let tables = {} as Record<string, Table>;
   let editorTabLastUpdatedAt = Date.now();
   if (activeTab) {
@@ -254,7 +258,9 @@ export default function getInitialState({
       activeSouthPaneTab: 'Results',
       alerts: [],
       databases,
+      dbConnect: false,
       offline: false,
+      errorMessage: null,
       queries: Object.fromEntries(
         Object.entries(queries).map(([queryId, query]) => [
           queryId,

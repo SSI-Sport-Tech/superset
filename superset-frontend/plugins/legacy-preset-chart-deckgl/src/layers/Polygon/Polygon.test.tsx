@@ -20,7 +20,11 @@
 import { render, screen } from '@testing-library/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import '@testing-library/jest-dom';
+<<<<<<< HEAD
 import { supersetTheme, ThemeProvider } from '@superset-ui/core';
+=======
+import { supersetTheme, ThemeProvider } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import DeckGLPolygon, { getPoints } from './Polygon';
 import { COLOR_SCHEME_TYPES } from '../../utilities/utils';
 import * as utils from '../../utils';

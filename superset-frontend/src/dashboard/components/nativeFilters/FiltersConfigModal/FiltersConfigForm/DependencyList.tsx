@@ -17,7 +17,12 @@
  * under the License.
  */
 import { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { styled, t } from '@superset-ui/core';
+=======
+import { t } from '@apache-superset/core/translation';
+import { styled } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { Icons } from '@superset-ui/core/components/Icons';
 import { Select } from '@superset-ui/core/components';
 import { CollapsibleControl } from './CollapsibleControl';

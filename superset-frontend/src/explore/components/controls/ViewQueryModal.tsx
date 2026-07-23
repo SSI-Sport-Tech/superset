@@ -18,14 +18,19 @@
  */
 import { FC, Fragment, useEffect, useState } from 'react';
 
+import { t } from '@apache-superset/core/translation';
 import {
-  styled,
   ensureIsArray,
-  t,
   getClientErrorObject,
   QueryFormData,
 } from '@superset-ui/core';
+<<<<<<< HEAD
 import { Loading, Alert } from '@superset-ui/core/components';
+=======
+import { Alert } from '@apache-superset/core/components';
+import { styled } from '@apache-superset/core/theme';
+import { Loading } from '@superset-ui/core/components';
+>>>>>>> 6.1.0
 import { SupportedLanguage } from '@superset-ui/core/components/CodeSyntaxHighlighter';
 import { getChartDataRequest } from 'src/components/Chart/chartAction';
 import ViewQuery from 'src/explore/components/controls/ViewQuery';
@@ -60,7 +65,7 @@ const ViewQueryModal: FC<Props> = ({ latestQueryFormData }) => {
       resultType,
     })
       .then(({ json }) => {
-        setResult(ensureIsArray(json.result));
+        setResult(ensureIsArray(json.result) as Result[]);
         setIsLoading(false);
         setError(null);
       })

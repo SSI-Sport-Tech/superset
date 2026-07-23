@@ -30,7 +30,11 @@ import {
   UIEventHandler,
 } from 'react';
 import { TableInstance, Hooks } from 'react-table';
+<<<<<<< HEAD
 import { useTheme, css } from '@superset-ui/core';
+=======
+import { useTheme, css } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import getScrollBarSize from '../utils/getScrollBarSize';
 import needScrollBar from '../utils/needScrollBar';
 import useMountedMemo from '../utils/useMountedMemo';
@@ -344,7 +348,11 @@ function StickyWrap({
         style={{
           height: bodyHeight,
           overflow: 'auto',
+<<<<<<< HEAD
           scrollbarGutter: 'stable',
+=======
+          scrollbarGutter: hasVerticalScroll ? 'stable' : undefined,
+>>>>>>> 6.1.0
           width: maxWidth,
           boxSizing: 'border-box',
         }}

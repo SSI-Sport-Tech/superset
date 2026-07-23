@@ -19,7 +19,12 @@
 import { RefObject, useEffect, useRef, KeyboardEvent } from 'react';
 
 import { useSelector } from 'react-redux';
+<<<<<<< HEAD
 import { t, useTheme } from '@superset-ui/core';
+=======
+import { t } from '@apache-superset/core/translation';
+import { useTheme } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { List, Popover } from '@superset-ui/core/components';
 import {
   FiltersContainer,
@@ -180,7 +185,7 @@ const DetailsPanelPopover = ({
 
   return (
     <Popover
-      color={`${theme.colorBgElevated}cc`}
+      color={theme.colorBgElevated}
       content={content}
       open={popoverVisible}
       onOpenChange={handleVisibility}

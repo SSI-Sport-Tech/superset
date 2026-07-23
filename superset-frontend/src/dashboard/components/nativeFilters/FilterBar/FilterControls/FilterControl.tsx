@@ -22,14 +22,8 @@ import {
   InPortal,
   OutPortal,
 } from 'react-reverse-portal';
-import { styled, SupersetTheme, truncationCSS } from '@superset-ui/core';
-import {
-  FormItem as StyledFormItem,
-  Form,
-  Icons,
-  Tooltip,
-} from '@superset-ui/core/components';
 import { FilterBarOrientation } from 'src/dashboard/types';
+import { isChartCustomization } from '@superset-ui/core';
 import { checkIsMissingRequiredValue } from '../utils';
 import FilterValue from './FilterValue';
 import { FilterCard } from '../../FilterCard';
@@ -37,6 +31,7 @@ import { FilterBarScrollContext } from '../Vertical';
 import { FilterControlProps } from './types';
 import { FilterCardPlacement } from '../../FilterCard/types';
 import { useIsFilterInScope } from '../../state';
+<<<<<<< HEAD
 
 const FilterStyledIcon = styled.div`
   position: absolute;
@@ -283,6 +278,15 @@ const DescriptionToolTip = ({ description }: { description: string }) => (
     </Tooltip>
   </ToolTipContainer>
 );
+=======
+import {
+  FilterStyledIcon,
+  RequiredFieldIndicator,
+  DescriptionToolTip,
+  useFilterControlDisplay,
+} from './FilterControlShared';
+import GroupByFilterCard from './GroupByFilterCard';
+>>>>>>> 6.1.0
 
 const FilterControl = ({
   dataMaskSelected,
@@ -353,6 +357,24 @@ const FilterControl = ({
     }
     return FilterCardPlacement.Right;
   }, [orientation, overflow]);
+
+  if (
+    isChartCustomization(filter) &&
+    filter.filterType === 'chart_customization_dynamic_groupby'
+  ) {
+    return (
+      <GroupByFilterCard
+        customizationItem={filter}
+        orientation={
+          orientation === FilterBarOrientation.Horizontal
+            ? 'horizontal'
+            : 'vertical'
+        }
+        dataMaskSelected={dataMaskSelected}
+        onFilterSelectionChange={onFilterSelectionChange}
+      />
+    );
+  }
 
   return (
     <>

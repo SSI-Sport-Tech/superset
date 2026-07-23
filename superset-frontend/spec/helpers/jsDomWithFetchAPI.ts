@@ -31,6 +31,10 @@ export default class FixJSDOMEnvironment extends JSDOMEnvironment {
     this.global.Response = Response;
     this.global.AbortSignal = AbortSignal;
     this.global.AbortController = AbortController;
+<<<<<<< HEAD
+=======
+    this.global.ReadableStream = ReadableStream;
+>>>>>>> 6.1.0
 
     // Mock MessageChannel to prevent hanging Jest tests with rc-overflow@1.4.1
     // Forces rc-overflow to use requestAnimationFrame fallback instead

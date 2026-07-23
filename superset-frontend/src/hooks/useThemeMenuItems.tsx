@@ -19,7 +19,12 @@
 import { useMemo } from 'react';
 import { Icons, Tooltip } from '@superset-ui/core/components';
 import type { MenuItem } from '@superset-ui/core/components/Menu';
+<<<<<<< HEAD
 import { t, ThemeMode, ThemeAlgorithm } from '@superset-ui/core';
+=======
+import { t } from '@apache-superset/core/translation';
+import { ThemeMode, ThemeAlgorithm } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { NAVBAR_MENU_POPUP_OFFSET } from 'src/features/home/commonMenuData';
 
 export interface ThemeSubMenuOption {

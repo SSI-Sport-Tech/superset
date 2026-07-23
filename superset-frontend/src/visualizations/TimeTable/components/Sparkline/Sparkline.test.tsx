@@ -26,6 +26,10 @@ const mockEntries = [
   { time: '2023-01-04', sales: 400 },
 ];
 
+<<<<<<< HEAD
+=======
+// eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
 describe('Sparkline', () => {
   test('should render basic sparkline without time ratio', () => {
     const column = {

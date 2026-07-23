@@ -16,7 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+<<<<<<< HEAD
 import { styled } from '@superset-ui/core';
+=======
+import { styled } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { FormLabel } from '@superset-ui/core/components';
 
 export const StyledFormLabel = styled(FormLabel)`

@@ -24,7 +24,12 @@ import {
   within,
 } from 'spec/helpers/testing-library';
 import fetchMock from 'fetch-mock';
+<<<<<<< HEAD
 import DatasetSelect from './DatasetSelect';
+=======
+import DatasetSelect, { loadDatasetOptions } from './DatasetSelect';
+import { supersetGetCache } from 'src/utils/cachedSupersetGet';
+>>>>>>> 6.1.0
 
 const DATASETS = [
   {
@@ -56,7 +61,11 @@ const DATASETS = [
 const mockOnChange = jest.fn();
 
 afterEach(() => {
+<<<<<<< HEAD
   fetchMock.restore();
+=======
+  fetchMock.clearHistory().removeRoutes();
+>>>>>>> 6.1.0
   jest.clearAllMocks();
 });
 
@@ -201,3 +210,69 @@ test('includes table_name field in option data structure', async () => {
     expect(callArg).toHaveProperty('table_name', 'birth_names');
   });
 });
+<<<<<<< HEAD
+=======
+
+test('uses API count instead of filteredResult.length', async () => {
+  supersetGetCache.clear();
+  fetchMock.clearHistory().removeRoutes();
+  fetchMock.get('glob:*/api/v1/dataset/*', {
+    result: [
+      {
+        id: 1,
+        table_name: 'ds1',
+        database: { database_name: 'db' },
+        schema: 'public',
+      },
+      {
+        id: 2,
+        table_name: 'ds2',
+        database: { database_name: 'db' },
+        schema: 'public',
+      },
+    ],
+    count: 500,
+  });
+
+  const result = await loadDatasetOptions('', 0, 100, [1, 2]);
+
+  expect(result.totalCount).toBe(500);
+  expect(result.totalCount).not.toBe(0);
+});
+
+test('returns total count from API when data is filtered', async () => {
+  supersetGetCache.clear();
+  fetchMock.clearHistory().removeRoutes();
+
+  fetchMock.get('glob:*/api/v1/dataset/*', {
+    result: [
+      {
+        id: 1,
+        table_name: 'birth_names',
+        database: { database_name: 'examples' },
+        schema: 'public',
+      },
+      {
+        id: 2,
+        table_name: 'birth_registry',
+        database: { database_name: 'examples' },
+        schema: 'public',
+      },
+      {
+        id: 3,
+        table_name: 'birth_rates',
+        database: { database_name: 'examples' },
+        schema: 'public',
+      },
+    ],
+    count: 25,
+  });
+
+  // Search for 'birth' and exclude dataset id 2 (client-side filtering)
+  const result = await loadDatasetOptions('birth', 0, 100, [2]);
+
+  expect(result.totalCount).toBe(25);
+  expect(result.data).toHaveLength(2);
+  expect(result.data.find(item => item.value === 2)).toBeUndefined();
+});
+>>>>>>> 6.1.0

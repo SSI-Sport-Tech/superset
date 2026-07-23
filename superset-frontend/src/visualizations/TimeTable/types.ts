@@ -17,6 +17,11 @@
  * under the License.
  */
 
+<<<<<<< HEAD
+=======
+export type SparkType = 'line' | 'bar' | 'area';
+
+>>>>>>> 6.1.0
 export interface ColumnConfig {
   key: string;
   label?: string;
@@ -32,6 +37,10 @@ export interface ColumnConfig {
   dateFormat?: string;
   yAxisBounds?: [number | undefined, number | undefined] | null[];
   showYAxis?: boolean;
+<<<<<<< HEAD
+=======
+  sparkType?: SparkType;
+>>>>>>> 6.1.0
 }
 
 export interface ColumnRow {

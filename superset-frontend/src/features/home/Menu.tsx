@@ -17,7 +17,13 @@
  * under the License.
  */
 import { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { styled, css, useTheme } from '@superset-ui/core';
+=======
+import { styled, css, useTheme } from '@apache-superset/core/theme';
+import { ensureStaticPrefix } from 'src/utils/assetUrl';
+import { ensureAppRoot } from 'src/utils/pathUtils';
+>>>>>>> 6.1.0
 import { getUrlParam } from 'src/utils/urlUtils';
 import { MainNav, MenuItem } from '@superset-ui/core/components/Menu';
 import { Tooltip, Grid, Row, Col, Image } from '@superset-ui/core/components';
@@ -174,6 +180,10 @@ const StyledCol = styled(Col)`
   ${({ theme }) => css`
     display: flex;
     gap: ${theme.sizeUnit * 4}px;
+<<<<<<< HEAD
+=======
+    flex-wrap: wrap;
+>>>>>>> 6.1.0
   `}
 `;
 
@@ -277,8 +287,15 @@ export function Menu({
     return {
       key: label,
       label,
+<<<<<<< HEAD
       icon: <Icons.DownOutlined iconSize="xs" />,
       popupOffset: NAVBAR_MENU_POPUP_OFFSET,
+=======
+      ...(screens.md && {
+        icon: <Icons.DownOutlined iconSize="xs" />,
+        popupOffset: NAVBAR_MENU_POPUP_OFFSET,
+      }),
+>>>>>>> 6.1.0
       children: childItems,
     };
   };
@@ -287,10 +304,17 @@ export function Menu({
     if (theme.brandLogoUrl) {
       link = (
         <StyledBrandWrapper margin={theme.brandLogoMargin}>
+<<<<<<< HEAD
           <StyledBrandLink href={theme.brandLogoHref}>
             <StyledImage
               preview={false}
               src={theme.brandLogoUrl}
+=======
+          <StyledBrandLink href={ensureAppRoot(theme.brandLogoHref)}>
+            <StyledImage
+              preview={false}
+              src={ensureStaticPrefix(theme.brandLogoUrl)}
+>>>>>>> 6.1.0
               alt={theme.brandLogoAlt || 'Apache Superset'}
               height={theme.brandLogoHeight}
             />
@@ -303,17 +327,33 @@ export function Menu({
       // Kept as is for backwards compatibility with the old theme system / superset_config.py
       link = (
         <GenericLink className="navbar-brand" to={brand.path}>
+<<<<<<< HEAD
           <StyledImage preview={false} src={brand.icon} alt={brand.alt} />
+=======
+          <StyledImage
+            preview={false}
+            src={ensureStaticPrefix(brand.icon)}
+            alt={brand.alt}
+          />
+>>>>>>> 6.1.0
         </GenericLink>
       );
     } else {
       link = (
         <Typography.Link
           className="navbar-brand"
-          href={brand.path}
+          href={ensureAppRoot(brand.path)}
           tabIndex={-1}
         >
+<<<<<<< HEAD
           <StyledImage preview={false} src={brand.icon} alt={brand.alt} />
+=======
+          <StyledImage
+            preview={false}
+            src={ensureStaticPrefix(brand.icon)}
+            alt={brand.alt}
+          />
+>>>>>>> 6.1.0
         </Typography.Link>
       );
     }
@@ -338,7 +378,11 @@ export function Menu({
             </StyledBrandText>
           )}
           <StyledMainNav
+<<<<<<< HEAD
             mode="horizontal"
+=======
+            mode={screens.md ? 'horizontal' : 'inline'}
+>>>>>>> 6.1.0
             data-test="navbar-top"
             className="main-nav"
             selectedKeys={activeTabs}

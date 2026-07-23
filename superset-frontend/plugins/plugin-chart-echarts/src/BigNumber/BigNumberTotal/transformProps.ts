@@ -22,12 +22,12 @@ import {
   Metric,
 } from '@superset-ui/chart-controls';
 import {
-  GenericDataType,
   getMetricLabel,
   extractTimegrain,
   QueryFormData,
   getValueFormatter,
 } from '@superset-ui/core';
+import { GenericDataType } from '@apache-superset/core/common';
 import { BigNumberTotalChartProps, BigNumberVizProps } from '../types';
 import { getDateFormatter, getOriginalLabel, parseMetricValue } from '../utils';
 import { Refs } from '../../types';
@@ -42,7 +42,15 @@ export default function transformProps(
     formData,
     rawFormData,
     hooks,
+<<<<<<< HEAD
     datasource: { currencyFormats = {}, columnFormats = {} },
+=======
+    datasource: {
+      currencyFormats = {},
+      columnFormats = {},
+      currencyCodeColumn,
+    },
+>>>>>>> 6.1.0
     theme,
   } = chartProps;
   const {
@@ -60,7 +68,11 @@ export default function transformProps(
     subheaderFontSize,
   } = formData;
   const refs: Refs = {};
-  const { data = [], coltypes = [] } = queriesData[0] || {};
+  const {
+    data = [],
+    coltypes = [],
+    detected_currency: detectedCurrency,
+  } = queriesData[0] || {};
   const granularity = extractTimegrain(rawFormData as QueryFormData);
   const metrics = chartProps.datasource?.metrics || [];
   const originalLabel = getOriginalLabel(metric, metrics);
@@ -92,6 +104,10 @@ export default function transformProps(
     columnFormats,
     metricEntry?.d3format || yAxisFormat,
     currencyFormat,
+    undefined,
+    data,
+    currencyCodeColumn,
+    detectedCurrency,
   );
 
   const headerFormatter =

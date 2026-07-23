@@ -17,7 +17,12 @@
  * under the License.
  */
 import { Component, cloneElement, ReactElement } from 'react';
+<<<<<<< HEAD
 import { t, css, SupersetTheme } from '@superset-ui/core';
+=======
+import { t } from '@apache-superset/core/translation';
+import { css, SupersetTheme } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import copyTextToClipboard from 'src/utils/copy';
 import { Tooltip } from '@superset-ui/core/components';
 import withToasts from '../MessageToasts/withToasts';

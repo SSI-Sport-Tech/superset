@@ -25,6 +25,7 @@ import {
 } from 'react';
 import type { SelectValue } from '@superset-ui/core/components';
 
+<<<<<<< HEAD
 import {
   styled,
   t,
@@ -33,6 +34,13 @@ import {
 } from '@superset-ui/core';
 import { CertifiedBadge, Select } from '@superset-ui/core/components';
 import { DatabaseSelector } from 'src/components';
+=======
+import { t } from '@apache-superset/core/translation';
+import { SupersetError } from '@superset-ui/core';
+import { styled } from '@apache-superset/core/theme';
+import { CertifiedBadge, Select } from '@superset-ui/core/components';
+import { DatabaseSelector, ErrorMessageWithStackTrace } from 'src/components';
+>>>>>>> 6.1.0
 import { Icons } from '@superset-ui/core/components/Icons';
 import type { DatabaseObject } from 'src/components/DatabaseSelector/types';
 import { StyledFormLabel } from 'src/components/DatabaseSelector/styles';
@@ -100,7 +108,6 @@ interface TableSelectorProps {
   catalog?: string | null;
   schema?: string;
   onEmptyResults?: (searchText?: string) => void;
-  sqlLabMode?: boolean;
   tableValue?: string | string[];
   onTableSelectChange?: (
     value?: string | string[],
@@ -122,9 +129,11 @@ export const TableOption = ({ table }: { table: Table }) => {
   return (
     <TableLabel title={value}>
       {type === 'view' ? (
-        <Icons.EyeOutlined iconSize="m" />
+        <Icons.FunctionOutlined iconSize="m" />
+      ) : type === 'materialized_view' ? (
+        <Icons.ProfileOutlined iconSize="m" />
       ) : (
-        <Icons.InsertRowAboveOutlined iconSize="m" />
+        <Icons.TableOutlined iconSize="m" />
       )}
       {extra?.certification && (
         <CertifiedBadge
@@ -168,7 +177,6 @@ const TableSelector: FunctionComponent<TableSelectorProps> = ({
   onEmptyResults,
   catalog,
   schema,
-  sqlLabMode = true,
   tableSelectMode = 'single',
   tableValue = undefined,
   onTableSelectChange,
@@ -184,6 +192,7 @@ const TableSelector: FunctionComponent<TableSelectorProps> = ({
   const [tableSelectValue, setTableSelectValue] = useState<
     SelectValue | undefined
   >(undefined);
+  const [errorPayload, setErrorPayload] = useState<SupersetError | null>(null);
   const {
     currentData: data,
     isFetching: loadingTables,
@@ -193,19 +202,17 @@ const TableSelector: FunctionComponent<TableSelectorProps> = ({
     catalog: currentCatalog,
     schema: currentSchema,
     onSuccess: (data, isFetched) => {
+      setErrorPayload(null);
       if (isFetched) {
         addSuccessToast(t('List updated'));
       }
     },
-    onError: err => {
-      getClientErrorObject(err).then(clientError => {
-        handleError(
-          getClientErrorMessage(
-            t('There was an error loading the tables'),
-            clientError,
-          ),
-        );
-      });
+    onError: error => {
+      if (error?.errors) {
+        setErrorPayload(error?.errors?.[0] ?? null);
+      } else {
+        handleError(error?.error || t('There was an error loading the tables'));
+      }
     },
   });
 
@@ -308,7 +315,11 @@ const TableSelector: FunctionComponent<TableSelectorProps> = ({
   function renderTableSelect() {
     const disabled = (currentSchema && !formMode && readOnly) || !currentSchema;
 
+<<<<<<< HEAD
     const label = sqlLabMode ? t('See table schema') : t('Table');
+=======
+    const label = t('Table');
+>>>>>>> 6.1.0
 
     const select = (
       <Select
@@ -344,6 +355,15 @@ const TableSelector: FunctionComponent<TableSelectorProps> = ({
         {renderSelectRow(select, refreshLabel)}
       </>
     );
+<<<<<<< HEAD
+=======
+  }
+
+  function renderError() {
+    return errorPayload ? (
+      <ErrorMessageWithStackTrace error={errorPayload} source="crud" />
+    ) : null;
+>>>>>>> 6.1.0
   }
 
   return (
@@ -360,11 +380,11 @@ const TableSelector: FunctionComponent<TableSelectorProps> = ({
         catalog={currentCatalog}
         onSchemaChange={readOnly ? undefined : internalSchemaChange}
         schema={currentSchema}
-        sqlLabMode={sqlLabMode}
         isDatabaseSelectEnabled={isDatabaseSelectEnabled && !readOnly}
         readOnly={readOnly}
       />
-      {sqlLabMode && !formMode && <div className="divider" />}
+      {!formMode && <div className="divider" />}
+      {renderError()}
       {renderTableSelect()}
     </TableSelectorWrapper>
   );

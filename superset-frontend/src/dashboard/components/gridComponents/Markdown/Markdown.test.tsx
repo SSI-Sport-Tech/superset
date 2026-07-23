@@ -25,11 +25,37 @@ import {
   userEvent,
   RenderResult,
 } from 'spec/helpers/testing-library';
+<<<<<<< HEAD
 import { supersetTheme } from '@superset-ui/core';
+=======
+import { supersetTheme } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { mockStore } from 'spec/fixtures/mockStore';
 import { dashboardLayout as mockLayout } from 'spec/fixtures/mockDashboardLayout';
 import MarkdownConnected from './Markdown';
 
+<<<<<<< HEAD
+=======
+jest.mock('src/core/editors', () => ({
+  EditorHost: ({
+    value,
+    onChange,
+    onBlur,
+  }: {
+    value: string;
+    onChange?: (v: string) => void;
+    onBlur?: (v: string) => void;
+  }) => (
+    <textarea
+      role="textbox"
+      defaultValue={value}
+      onChange={e => onChange?.(e.target.value)}
+      onBlur={e => onBlur?.(e.target.value)}
+    />
+  ),
+}));
+
+>>>>>>> 6.1.0
 interface MarkdownProps {
   id: string;
   parentId: string;
@@ -165,7 +191,11 @@ test('should call updateComponents when switching from edit to preview with chan
   const updateComponents = jest.fn();
   const mockCode = 'new markdown!';
 
+<<<<<<< HEAD
   const { container } = await setup({
+=======
+  await setup({
+>>>>>>> 6.1.0
     editMode: true,
     updateComponents,
     component: {
@@ -185,8 +215,13 @@ test('should call updateComponents when switching from edit to preview with chan
     // Wait for editor to be fully mounted
     await new Promise(resolve => setTimeout(resolve, 50));
 
+<<<<<<< HEAD
     // Find the actual textarea/input element
     const editor = container.querySelector('.ace_text-input');
+=======
+    // Find the actual textarea element
+    const editor = screen.getByRole('textbox');
+>>>>>>> 6.1.0
 
     if (editor) {
       // Simulate direct input
@@ -262,6 +297,12 @@ test('should handle markdown errors gracefully', async () => {
 
     await new Promise(resolve => setTimeout(resolve, 100));
   });
+<<<<<<< HEAD
+=======
+
+  // Verify component still renders after error events
+  expect(screen.getByTestId('dashboard-markdown-editor')).toBeInTheDocument();
+>>>>>>> 6.1.0
 });
 
 test('should resize editor when width changes', async () => {
@@ -288,6 +329,14 @@ test('should resize editor when width changes', async () => {
 
     await new Promise(resolve => setTimeout(resolve, 100));
   });
+<<<<<<< HEAD
+=======
+
+  // Verify component still renders after resize
+  expect(
+    screen.getByTestId('dashboard-component-chart-holder'),
+  ).toBeInTheDocument();
+>>>>>>> 6.1.0
 });
 
 test('should update content when undo/redo changes occur', async () => {
@@ -376,6 +425,30 @@ test('shouldFocusMarkdown returns false when clicking outside markdown container
   expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
 });
 
+<<<<<<< HEAD
+=======
+test('should re-enter edit mode on a single click after clicking outside', async () => {
+  await setup({ editMode: true });
+
+  const markdownContainer = screen.getByTestId(
+    'dashboard-component-chart-holder',
+  );
+
+  // Click to enter edit mode
+  userEvent.click(markdownContainer);
+  expect(await screen.findByRole('textbox')).toBeInTheDocument();
+
+  // Click outside to exit edit mode
+  userEvent.click(document.body);
+  await new Promise(resolve => setTimeout(resolve, 50));
+  expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+
+  // Click back inside — editor should appear on a single click
+  userEvent.click(markdownContainer);
+  expect(await screen.findByRole('textbox')).toBeInTheDocument();
+});
+
+>>>>>>> 6.1.0
 test('shouldFocusMarkdown keeps focus when clicking on menu items', async () => {
   await setup({ editMode: true });
 
@@ -390,9 +463,14 @@ test('shouldFocusMarkdown keeps focus when clicking on menu items', async () => 
   const editButton = screen.getByText('Edit');
 
   userEvent.click(editButton);
+<<<<<<< HEAD
   await new Promise(resolve => setTimeout(resolve, 50));
 
   expect(screen.queryByRole('textbox')).toBeInTheDocument();
+=======
+
+  expect(await screen.findByRole('textbox')).toBeInTheDocument();
+>>>>>>> 6.1.0
 });
 
 test('should exit edit mode when clicking outside in same row', async () => {
@@ -426,10 +504,20 @@ test('should have fontWeightStrong in theme for bold markdown rendering', async 
     },
   });
 
+<<<<<<< HEAD
   // CRITICAL: Verify fontWeightStrong exists in the theme
   // If it's missing from allowedAntdTokens, GlobalStyles.tsx:66 will set
   // font-weight: undefined on <strong> tags, breaking bold markdown rendering
   // Ant Design default is 600, backend config sets 500, either is acceptable
   expect(supersetTheme.fontWeightStrong).toBeDefined();
   expect(supersetTheme.fontWeightStrong).toBeGreaterThan(400);
+=======
+  // CRITICAL: Verify fontWeightStrong exists in the theme with adequate weight
+  // If it's missing from allowedAntdTokens, GlobalStyles.tsx:66 will set
+  // font-weight: undefined on <strong> tags, breaking bold markdown rendering
+  // Must be >= 600 (semibold) to show a true visual difference when bolded
+  // Values < 600 (like 500/medium) are too subtle and appear similar to normal (400)
+  expect(supersetTheme.fontWeightStrong).toBeDefined();
+  expect(supersetTheme.fontWeightStrong).toBeGreaterThanOrEqual(600);
+>>>>>>> 6.1.0
 });

@@ -30,7 +30,11 @@ const chartDataEndpoint = 'glob:*/api/v1/chart/data*';
 
 afterEach(() => {
   jest.resetAllMocks();
+<<<<<<< HEAD
   fetchMock.restore();
+=======
+  fetchMock.clearHistory().removeRoutes();
+>>>>>>> 6.1.0
 });
 
 test('renders Alert component when query result contains validation error', async () => {
@@ -40,6 +44,7 @@ test('renders Alert component when query result contains validation error', asyn
    * component instead of showing a blank panel
    */
   // Mock API response with validation error
+<<<<<<< HEAD
   fetchMock.post(chartDataEndpoint, {
     result: [
       {
@@ -48,6 +53,20 @@ test('renders Alert component when query result contains validation error', asyn
       },
     ],
   });
+=======
+  fetchMock.post(
+    chartDataEndpoint,
+    {
+      result: [
+        {
+          error: 'Missing temporal column',
+          language: 'sql',
+        },
+      ],
+    },
+    { name: chartDataEndpoint },
+  );
+>>>>>>> 6.1.0
 
   render(<ViewQueryModal latestQueryFormData={mockFormData} />, {
     useRedux: true,
@@ -55,7 +74,11 @@ test('renders Alert component when query result contains validation error', asyn
 
   // Wait for API call to complete
   await waitFor(() =>
+<<<<<<< HEAD
     expect(fetchMock.calls(chartDataEndpoint)).toHaveLength(1),
+=======
+    expect(fetchMock.callHistory.calls(chartDataEndpoint)).toHaveLength(1),
+>>>>>>> 6.1.0
   );
 
   // Assert Alert component is rendered with error message
@@ -73,6 +96,7 @@ test('renders both Alert and SQL query when parsing error occurs', async () => {
    * For parsing errors, the SQL was successfully compiled but optimization failed.
    */
   // Mock API response with parsing error (has both query and error)
+<<<<<<< HEAD
   fetchMock.post(chartDataEndpoint, {
     result: [
       {
@@ -82,6 +106,21 @@ test('renders both Alert and SQL query when parsing error occurs', async () => {
       },
     ],
   });
+=======
+  fetchMock.post(
+    chartDataEndpoint,
+    {
+      result: [
+        {
+          query: 'SELECT SUM ( Open',
+          error: "Error parsing near 'Open' at line 1:17",
+          language: 'sql',
+        },
+      ],
+    },
+    { name: chartDataEndpoint },
+  );
+>>>>>>> 6.1.0
 
   render(<ViewQueryModal latestQueryFormData={mockFormData} />, {
     useRedux: true,
@@ -100,9 +139,20 @@ test('renders both Alert and SQL query when parsing error occurs', async () => {
   // Assert SQL query is also displayed
   // Note: The SQL is rendered inside a syntax-highlighted code block where
   // each keyword is in a separate span element
+<<<<<<< HEAD
   await waitFor(() => {
     expect(screen.getByText('SELECT')).toBeInTheDocument();
     expect(screen.getByText('SUM')).toBeInTheDocument();
     expect(screen.getByText('Open')).toBeInTheDocument();
   });
+=======
+  await waitFor(
+    () => {
+      expect(screen.getByText('SELECT')).toBeInTheDocument();
+      expect(screen.getByText('SUM')).toBeInTheDocument();
+      expect(screen.getByText('Open')).toBeInTheDocument();
+    },
+    { timeout: 5000 },
+  );
+>>>>>>> 6.1.0
 });

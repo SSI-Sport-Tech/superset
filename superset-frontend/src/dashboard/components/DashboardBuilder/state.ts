@@ -26,6 +26,10 @@ import {
   useFilters,
   useNativeFiltersDataMask,
 } from '../nativeFilters/FilterBar/state';
+<<<<<<< HEAD
+=======
+import { useChartCustomizationFromRedux } from '../nativeFilters/state';
+>>>>>>> 6.1.0
 import { toggleNativeFiltersBar } from '../../actions/dashboardState';
 
 export const useNativeFilters = () => {
@@ -46,12 +50,25 @@ export const useNativeFilters = () => {
   const filters = useFilters();
   const filterValues = useMemo(() => Object.values(filters), [filters]);
   const expandFilters = getUrlParam(URL_PARAMS.expandFilters);
+<<<<<<< HEAD
+=======
+  const chartCustomizations = useChartCustomizationFromRedux();
+>>>>>>> 6.1.0
 
   const nativeFiltersEnabled =
-    showNativeFilters && (canEdit || (!canEdit && filterValues.length !== 0));
+    showNativeFilters &&
+    (canEdit ||
+      (!canEdit &&
+        (filterValues.length !== 0 || chartCustomizations.length !== 0)));
 
   const requiredFirstFilter = useMemo(
-    () => filterValues.filter(filter => filter.requiredFirst),
+    () =>
+      filterValues.filter(
+        filter =>
+          'requiredFirst' in filter &&
+          filter.requiredFirst === true &&
+          filter.filterType !== 'filter_time',
+      ),
     [filterValues],
   );
   const dataMask = useNativeFiltersDataMask();
@@ -82,13 +99,25 @@ export const useNativeFilters = () => {
       (isFeatureEnabled(FeatureFlag.FilterBarClosedByDefault) &&
         expandFilters === null) ||
       expandFilters === false ||
-      (filterValues.length === 0 && nativeFiltersEnabled)
+      (filterValues.length === 0 &&
+        chartCustomizations.length === 0 &&
+        nativeFiltersEnabled)
     ) {
       dispatch(toggleNativeFiltersBar(false));
     } else {
       dispatch(toggleNativeFiltersBar(true));
     }
+<<<<<<< HEAD
   }, [dispatch, filterValues.length, expandFilters, nativeFiltersEnabled]);
+=======
+  }, [
+    dispatch,
+    filterValues.length,
+    chartCustomizations.length,
+    expandFilters,
+    nativeFiltersEnabled,
+  ]);
+>>>>>>> 6.1.0
 
   useEffect(() => {
     if (showDashboard) {

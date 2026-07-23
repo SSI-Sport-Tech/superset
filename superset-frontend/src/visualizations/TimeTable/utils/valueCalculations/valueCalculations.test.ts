@@ -25,6 +25,10 @@ import {
 } from './valueCalculations';
 import type { ColumnConfig, Entry } from '../../types';
 
+<<<<<<< HEAD
+=======
+// eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
 describe('valueCalculations', () => {
   const mockEntries: Entry[] = [
     { time: '2023-01-03', sales: 300, price: 30 },
@@ -32,6 +36,10 @@ describe('valueCalculations', () => {
     { time: '2023-01-01', sales: 100, price: 10 },
   ];
 
+<<<<<<< HEAD
+=======
+  // eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
   describe('calculateTimeValue', () => {
     test('should calculate diff comparison correctly', () => {
       const column: ColumnConfig = {
@@ -285,6 +293,10 @@ describe('valueCalculations', () => {
     });
   });
 
+<<<<<<< HEAD
+=======
+  // eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
   describe('calculateContribution', () => {
     test('should calculate contribution correctly', () => {
       const result = calculateContribution(300, mockEntries);
@@ -312,6 +324,10 @@ describe('valueCalculations', () => {
     });
   });
 
+<<<<<<< HEAD
+=======
+  // eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
   describe('calculateAverage', () => {
     test('should calculate average correctly', () => {
       const column: ColumnConfig = {
@@ -373,6 +389,10 @@ describe('valueCalculations', () => {
     });
   });
 
+<<<<<<< HEAD
+=======
+  // eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
   describe('calculateCellValue', () => {
     test('should route to time calculation', () => {
       const column: ColumnConfig = {

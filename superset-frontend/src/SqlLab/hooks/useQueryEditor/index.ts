@@ -21,6 +21,8 @@ import { useMemo } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { SqlLabRootState, QueryEditor } from 'src/SqlLab/types';
 
+export const EMPTY_STATE_QE_ID = 'tmp_qe_id';
+
 export default function useQueryEditor<T extends keyof QueryEditor>(
   sqlEditorId: string,
   attributes: ReadonlyArray<T>,
@@ -30,7 +32,14 @@ export default function useQueryEditor<T extends keyof QueryEditor>(
     shallowEqual,
   );
   const queryEditorsById = useMemo(
+<<<<<<< HEAD
     () => Object.fromEntries(queryEditors.map(editor => [editor.id, editor])),
+=======
+    () =>
+      Object.fromEntries(
+        queryEditors.map((editor, index) => [editor.id, index]),
+      ),
+>>>>>>> 6.1.0
     [queryEditors.map(({ id }) => id).join(',')],
   );
 
@@ -38,8 +47,13 @@ export default function useQueryEditor<T extends keyof QueryEditor>(
     ({ sqlLab: { unsavedQueryEditor } }) =>
       pick(
         {
+<<<<<<< HEAD
           ...queryEditorsById[sqlEditorId],
+=======
+          ...queryEditors[queryEditorsById[sqlEditorId]],
+>>>>>>> 6.1.0
           ...(sqlEditorId === unsavedQueryEditor?.id && unsavedQueryEditor),
+          ...(sqlEditorId === EMPTY_STATE_QE_ID && { id: sqlEditorId }),
         },
         ['id'].concat(attributes),
       ) as Pick<QueryEditor, T | 'id'>,

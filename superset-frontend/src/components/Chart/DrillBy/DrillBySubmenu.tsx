@@ -26,17 +26,28 @@ import {
   useRef,
   useState,
 } from 'react';
+<<<<<<< HEAD
+=======
+import { t } from '@apache-superset/core/translation';
+>>>>>>> 6.1.0
 import {
   BaseFormData,
   Behavior,
   Column,
   ContextMenuFilters,
+<<<<<<< HEAD
   css,
   ensureIsArray,
   getChartMetadataRegistry,
   t,
   useTheme,
 } from '@superset-ui/core';
+=======
+  ensureIsArray,
+  getChartMetadataRegistry,
+} from '@superset-ui/core';
+import { css, useTheme } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import {
   Constants,
   Input,
@@ -180,8 +191,16 @@ export const DrillBySubmenu = ({
   }
 
   if (
+<<<<<<< HEAD
     formData.matrixify_enable_vertical_layout === true ||
     formData.matrixify_enable_horizontal_layout === true
+=======
+    formData.matrixify_enable === true &&
+    ((formData.matrixify_mode_rows !== undefined &&
+      formData.matrixify_mode_rows !== 'disabled') ||
+      (formData.matrixify_mode_columns !== undefined &&
+        formData.matrixify_mode_columns !== 'disabled'))
+>>>>>>> 6.1.0
   ) {
     return null;
   }

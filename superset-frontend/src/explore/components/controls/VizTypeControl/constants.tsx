@@ -16,9 +16,20 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+<<<<<<< HEAD
 import { VizType, css } from '@superset-ui/core';
+=======
+import { ReactElement } from 'react';
+import { VizType } from '@superset-ui/core';
+import { css } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 import { Icons } from '@superset-ui/core/components/Icons';
 import { VizMeta } from './types';
+
+// Custom icons for non-featured charts
+export const CUSTOM_CHART_ICONS: Record<string, ReactElement> = {
+  deck_multi: <Icons.Multiple iconSize="l" viewBox="5 4 15 20" />,
+};
 
 export const FEATURED_CHARTS: VizMeta[] = [
   {

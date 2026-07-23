@@ -48,6 +48,10 @@ const mockProps: TabsRendererProps = {
   tabBarPaddingLeft: 16,
 };
 
+<<<<<<< HEAD
+=======
+// eslint-disable-next-line no-restricted-globals -- TODO: Migrate from describe blocks
+>>>>>>> 6.1.0
 describe('TabsRenderer', () => {
   beforeEach(() => {
     jest.clearAllMocks();

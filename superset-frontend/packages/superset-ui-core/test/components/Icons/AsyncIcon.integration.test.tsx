@@ -19,7 +19,11 @@
 
 import '@testing-library/jest-dom';
 import { render, fireEvent } from '@testing-library/react';
+<<<<<<< HEAD
 import { SupersetTheme, ThemeProvider } from '@superset-ui/core';
+=======
+import { SupersetTheme, ThemeProvider } from '@apache-superset/core/theme';
+>>>>>>> 6.1.0
 
 // CRITICAL: Don't import from the mocked path - import directly to avoid global mocks
 import AsyncIcon from '../../../src/components/Icons/AsyncIcon';
@@ -45,7 +49,11 @@ const mockTheme: SupersetTheme = {
 } as SupersetTheme;
 
 describe('AsyncIcon Integration Tests (Real Component)', () => {
+<<<<<<< HEAD
   it('should have data-test and aria-label attributes with real component', () => {
+=======
+  test('should have data-test and aria-label attributes with real component', () => {
+>>>>>>> 6.1.0
     const { container } = render(
       <ThemeProvider theme={mockTheme}>
         <AsyncIcon customIcons fileName="slack" iconSize="l" />
@@ -61,7 +69,11 @@ describe('AsyncIcon Integration Tests (Real Component)', () => {
     expect(spanElement).toHaveAttribute('data-test', 'slack');
   });
 
+<<<<<<< HEAD
   it('should always have aria-label and data-test for testing', () => {
+=======
+  test('should always have aria-label and data-test for testing', () => {
+>>>>>>> 6.1.0
     const { container } = render(
       <ThemeProvider theme={mockTheme}>
         <AsyncIcon customIcons fileName="slack" iconSize="l" />
@@ -81,7 +93,11 @@ describe('AsyncIcon Integration Tests (Real Component)', () => {
     expect(dataTest).toBe('slack');
   });
 
+<<<<<<< HEAD
   it('should set role to button when onClick is provided in real component', () => {
+=======
+  test('should set role to button when onClick is provided in real component', () => {
+>>>>>>> 6.1.0
     const onClick = jest.fn();
     const { container } = render(
       <ThemeProvider theme={mockTheme}>
@@ -105,7 +121,11 @@ describe('AsyncIcon Integration Tests (Real Component)', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
+<<<<<<< HEAD
   it('should handle complex fileName patterns like BaseIcon', () => {
+=======
+  test('should handle complex fileName patterns like BaseIcon', () => {
+>>>>>>> 6.1.0
     const { container } = render(
       <ThemeProvider theme={mockTheme}>
         <AsyncIcon customIcons fileName="slack_notification" iconSize="l" />

@@ -55,6 +55,10 @@ const Sparkline = ({
       yAxisBounds={yAxisBounds}
       showYAxis={column.showYAxis || false}
       entries={entries}
+<<<<<<< HEAD
+=======
+      sparkType={column.sparkType || 'line'}
+>>>>>>> 6.1.0
     />
   );
 };

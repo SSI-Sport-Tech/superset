@@ -16,9 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-import { getClientErrorObject, t } from '@superset-ui/core';
+import { t } from '@apache-superset/core/translation';
+import { getClientErrorObject } from '@superset-ui/core';
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useBeforeUnload } from 'src/hooks/useBeforeUnload';
+import type { Location, Action } from 'history';
 
 type UseUnsavedChangesPromptProps = {
   hasUnsavedChanges: boolean;
@@ -68,7 +71,27 @@ export const useUnsavedChangesPrompt = ({
   }, [onSave]);
 
   const blockCallback = useCallback(
+<<<<<<< HEAD
     ({ pathname, state }: { pathname: string; state?: any }) => {
+=======
+    (
+      {
+        pathname,
+        search,
+        state,
+      }: {
+        pathname: Location['pathname'];
+        search: Location['search'];
+        state: Location['state'];
+      },
+      action: Action,
+    ) => {
+      // REPLACE actions are URL sync (e.g. updating form_data_key), not navigation
+      if (action === 'REPLACE') {
+        return undefined;
+      }
+
+>>>>>>> 6.1.0
       if (manualSaveRef.current) {
         manualSaveRef.current = false;
         return undefined;
@@ -76,7 +99,15 @@ export const useUnsavedChangesPrompt = ({
 
       confirmNavigationRef.current = () => {
         unblockRef.current?.();
+<<<<<<< HEAD
         history.push(pathname, state);
+=======
+        if (action === 'POP') {
+          history.go(-1);
+        } else {
+          history.push({ pathname, search }, state);
+        }
+>>>>>>> 6.1.0
       };
 
       setShowModal(true);
@@ -95,25 +126,13 @@ export const useUnsavedChangesPrompt = ({
   }, [blockCallback, hasUnsavedChanges, history]);
 
   useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (!hasUnsavedChanges) return;
-      event.preventDefault();
-
-      // Most browsers require a "returnValue" set to empty string
-      const evt = event as any;
-      evt.returnValue = '';
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [hasUnsavedChanges]);
-
-  useEffect(() => {
     if (!isSaveModalVisible && manualSaveRef.current) {
       setShowModal(false);
       manualSaveRef.current = false;
     }
   }, [isSaveModalVisible]);
+
+  useBeforeUnload(hasUnsavedChanges);
 
   return {
     showModal,
