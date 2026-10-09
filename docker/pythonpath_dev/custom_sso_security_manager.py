@@ -111,7 +111,7 @@ class CustomSsoSecurityManager(SupersetSecurityManager):
         logging.info("Oauth2 provider: {0}.".format(provider))
         if provider == "google":
             me = self.appbuilder.sm.oauth_remotes[provider].get("userinfo").json()
-            logging.info("user_data: {0}".format(me))
+            logging.info("Google login attempt for %r", me.get("email"))
             return {
                 "name": me["name"],
                 "email": me["email"],
@@ -120,10 +120,12 @@ class CustomSsoSecurityManager(SupersetSecurityManager):
                 "first_name": me.get("given_name", me["name"]),
                 "last_name": me.get("family_name", ""),
             }
-        info = super().oauth_user_info(provider, response)
+        # FAB's oauth_user_info is a None placeholder; the default handler is get_oauth_user_info.
+        info = super().get_oauth_user_info(provider, response)
         if provider == "azure" and info and info.get("email"):
             # FAB defaults the Azure username to the opaque object id.
             info["username"] = info["email"]
+            logging.info("Azure login attempt for %r", info["username"])
         return info
 
     def auth_user_oauth(self, userinfo):
