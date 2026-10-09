@@ -169,7 +169,7 @@ OAUTH_PROVIDERS = [
     {
         "name": "google",
         "token_key": "access_token",
-        "icon": "fa-google",
+        "icon": "fa-brands fa-google",
         "remote_app": {
             "client_id": os.getenv("GOOGLE_OAUTH_CLIENT_ID"),
             "client_secret": os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
@@ -177,7 +177,26 @@ OAUTH_PROVIDERS = [
             "api_base_url": "https://www.googleapis.com/oauth2/v2/",
             "server_metadata_url": "https://accounts.google.com/.well-known/openid-configuration",
         },
-    }
+    },
+    {
+        "name": "azure",
+        "token_key": "access_token",
+        "icon": "fa-brands fa-microsoft",
+        "remote_app": {
+            "client_id": os.getenv("AZURE_OAUTH_CLIENT_ID"),
+            "client_secret": os.getenv("AZURE_OAUTH_CLIENT_SECRET"),
+            "client_kwargs": {"scope": "openid email profile"},
+            "server_metadata_url": (
+                f"https://login.microsoftonline.com/{os.getenv('AZURE_OAUTH_TENANT_ID')}"
+                "/v2.0/.well-known/openid-configuration"
+            ),
+            # FAB validates the Entra id_token against these keys.
+            "jwks_uri": (
+                f"https://login.microsoftonline.com/{os.getenv('AZURE_OAUTH_TENANT_ID')}"
+                "/discovery/v2.0/keys"
+            ),
+        },
+    },
 ]
 
 # Disallow user registration, users must be created using superset fab create-user
