@@ -1,0 +1,380 @@
+{% extends "appbuilder/base.html" %} {% block content %}
+<style>
+    :root {
+        --sx-bg: #ffffff;
+        --sx-card-bg: #ffffff;
+        --sx-text: #1f1f1f;
+        --sx-text-secondary: #666666;
+        --sx-border: #d9d9d9;
+        --sx-input-bg: #ffffff;
+        --sx-hover-bg: #f5f5f5;
+        --sx-primary: #2893b3;
+        --sx-primary-hover: #1f7a96;
+        --sx-error: #e04355;
+        --sx-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    :root[data-theme="dark"] {
+        --sx-bg: #141414;
+        --sx-card-bg: #1f1f1f;
+        --sx-text: #e8e8e8;
+        --sx-text-secondary: #a6a6a6;
+        --sx-border: #424242;
+        --sx-input-bg: #141414;
+        --sx-hover-bg: #2a2a2a;
+        --sx-primary: #2ea0c2;
+        --sx-primary-hover: #4ab4d4;
+        --sx-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        color-scheme: dark;
+    }
+    html,
+    body {
+        background: var(--sx-bg);
+        color: var(--sx-text);
+        margin: 0;
+    }
+    /* Hide the confirm/alert modals; keep the top navbar with the logo. */
+    .modal {
+        display: none !important;
+    }
+    header.top .navbar {
+        margin-bottom: 0;
+        min-height: 56px;
+        background: var(--sx-card-bg);
+        border: 0;
+        border-bottom: 1px solid var(--sx-border);
+        border-radius: 0;
+    }
+    header.top .navbar-brand {
+        height: 56px;
+        padding: 10px 15px;
+    }
+    header.top .navbar-brand img {
+        height: 100%;
+        width: auto;
+    }
+    /* The Login link points at this same page. */
+    header.top .navbar-right {
+        display: none;
+    }
+    .sx-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 57px);
+        padding: 24px 16px;
+        box-sizing: border-box;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+            Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .sx-card {
+        width: 100%;
+        max-width: 400px;
+        background: var(--sx-card-bg);
+        border: 1px solid var(--sx-border);
+        border-radius: 8px;
+        box-shadow: var(--sx-shadow);
+        padding: 24px;
+        box-sizing: border-box;
+    }
+    .sx-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0 0 20px;
+        color: var(--sx-text);
+    }
+    .sx-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 6px 15px;
+        min-height: 32px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-radius: 6px;
+        border: 1px solid var(--sx-border);
+        background: var(--sx-card-bg);
+        color: var(--sx-text);
+        cursor: pointer;
+        text-decoration: none;
+        transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .sx-btn:hover,
+    .sx-btn:focus {
+        color: var(--sx-primary);
+        border-color: var(--sx-primary);
+        text-decoration: none;
+        outline: none;
+    }
+    .sx-btn-primary {
+        background: var(--sx-primary);
+        border-color: var(--sx-primary);
+        color: #ffffff;
+    }
+    .sx-btn-primary:hover,
+    .sx-btn-primary:focus {
+        background: var(--sx-primary-hover);
+        border-color: var(--sx-primary-hover);
+        color: #ffffff;
+    }
+    .sx-providers {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .sx-divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 20px 0;
+        color: var(--sx-text-secondary);
+        font-size: 12px;
+    }
+    .sx-divider::before,
+    .sx-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--sx-border);
+    }
+    .sx-hint {
+        color: var(--sx-text-secondary);
+        font-size: 14px;
+        margin: 0 0 16px;
+    }
+    .sx-field {
+        margin-bottom: 16px;
+    }
+    .sx-label {
+        display: block;
+        font-size: 12px;
+        color: var(--sx-primary);
+        margin-bottom: 4px;
+    }
+    .sx-input-wrap {
+        position: relative;
+    }
+    .sx-input-wrap > i {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--sx-text-secondary);
+        font-size: 14px;
+    }
+    .sx-input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 4px 11px 4px 34px;
+        min-height: 32px;
+        font-size: 14px;
+        border: 1px solid var(--sx-border);
+        border-radius: 6px;
+        background: var(--sx-input-bg);
+        color: var(--sx-text);
+    }
+    .sx-input:hover {
+        border-color: var(--sx-primary);
+    }
+    .sx-input:focus {
+        border-color: var(--sx-primary);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(40, 147, 179, 0.2);
+    }
+    .sx-error {
+        color: var(--sx-error);
+        font-size: 12px;
+        margin-top: 4px;
+    }
+    .sx-flash {
+        border: 1px solid var(--sx-error);
+        color: var(--sx-error);
+        border-radius: 6px;
+        padding: 8px 12px;
+        margin-bottom: 16px;
+        font-size: 13px;
+    }
+    .sx-remember {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        margin-bottom: 16px;
+    }
+    .sx-register {
+        text-align: center;
+        margin-top: 16px;
+        font-size: 14px;
+    }
+    .sx-register a {
+        color: var(--sx-primary);
+    }
+    .sx-theme {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--sx-border);
+    }
+    .sx-theme button {
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        color: var(--sx-text-secondary);
+        padding: 4px 10px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    .sx-theme button:hover {
+        background: var(--sx-hover-bg);
+    }
+    .sx-theme button[aria-pressed="true"] {
+        color: var(--sx-primary);
+        border-color: var(--sx-primary);
+    }
+</style>
+
+<div class="sx-wrap" data-test="login-form">
+    <div class="sx-card">
+        <h1 class="sx-title">{{ _('Sign in') }}</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% for
+        category, message in messages %}
+        <div class="sx-flash">{{ message }}</div>
+        {% endfor %} {% endwith %} {% if providers %}
+        <div class="sx-providers">
+            {% for provider in providers %}
+            <a
+                id="btn-signin-{{ provider.name }}"
+                class="sx-btn"
+                href="{{ appbuilder.get_url_for_login }}{{ provider.name }}{% if request.args.get('next') %}?next={{ request.args.get('next') | urlencode }}{% endif %}"
+            >
+                <i class="{{ provider.icon }}"></i>
+                {{ _('Sign in with') }} {{ 'Microsoft' if provider.name ==
+                'azure' else provider.name | capitalize }}
+            </a>
+            {% endfor %}
+        </div>
+        <div class="sx-divider">{{ _('or') }}</div>
+        {% endif %}
+
+        <p class="sx-hint">{{ _('Enter your login and password below:') }}</p>
+        <form action="" method="post" name="login">
+            {{ form.hidden_tag() }}
+
+            <div class="sx-field">
+                <label class="sx-label" for="username"
+                    >{{ _('Username:') }}</label
+                >
+                <div class="sx-input-wrap">
+                    <i class="fa fa-user"></i>
+                    {{ form.username(class="sx-input", autofocus=true) }}
+                </div>
+                {% for error in form.errors.get('username', []) %}
+                <div class="sx-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="sx-field">
+                <label class="sx-label" for="password"
+                    >{{ _('Password:') }}</label
+                >
+                <div class="sx-input-wrap">
+                    <i class="fa fa-key"></i>
+                    {{ form.password(class="sx-input") }}
+                </div>
+                {% for error in form.errors.get('password', []) %}
+                <div class="sx-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            {% if form.remember_me %}
+            <label class="sx-remember">
+                {{ form.remember_me() }} {{ _('Remember me') }}
+            </label>
+            {% endif %}
+
+            <button
+                type="submit"
+                class="sx-btn sx-btn-primary"
+                data-test="login-button"
+            >
+                {{ _('Sign in') }}
+            </button>
+        </form>
+
+        {% if appbuilder.sm.auth_user_registration %}
+        <div class="sx-register">
+            <a href="{{ appbuilder.get_url_for_userregistration }}"
+                >{{ _('Register') }}</a
+            >
+        </div>
+        {% endif %}
+
+        <div class="sx-theme" role="group" aria-label="{{ _('Theme') }}">
+            <button type="button" data-mode="default" title="{{ _('Light') }}">
+                <i class="fa fa-sun"></i>
+            </button>
+            <button type="button" data-mode="dark" title="{{ _('Dark') }}">
+                <i class="fa fa-moon"></i>
+            </button>
+            <button type="button" data-mode="system" title="{{ _('System') }}">
+                <i class="fa fa-desktop"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script nonce="{{ baselib.get_nonce() }}">
+    (function () {
+        // Same key and values as the Superset app so the choice carries over.
+        var KEY = "superset-theme-mode";
+        var media = window.matchMedia("(prefers-color-scheme: dark)");
+        var buttons = document.querySelectorAll(".sx-theme button");
+
+        function getMode() {
+            try {
+                var stored = localStorage.getItem(KEY);
+                return stored === "default" || stored === "dark"
+                    ? stored
+                    : "system";
+            } catch (e) {
+                return "system";
+            }
+        }
+
+        function apply(mode) {
+            var dark = mode === "dark" || (mode === "system" && media.matches);
+            document.documentElement.setAttribute(
+                "data-theme",
+                dark ? "dark" : "light"
+            );
+            buttons.forEach(function (b) {
+                b.setAttribute(
+                    "aria-pressed",
+                    b.getAttribute("data-mode") === mode ? "true" : "false"
+                );
+            });
+        }
+
+        buttons.forEach(function (b) {
+            b.addEventListener("click", function () {
+                var mode = b.getAttribute("data-mode");
+                try {
+                    localStorage.setItem(KEY, mode);
+                } catch (e) {}
+                apply(mode);
+            });
+        });
+
+        media.addEventListener("change", function () {
+            if (getMode() === "system") apply("system");
+        });
+
+        apply(getMode());
+    })();
+</script>
+{% endblock %}
