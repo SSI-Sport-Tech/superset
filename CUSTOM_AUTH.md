@@ -49,6 +49,12 @@ AZURE_OAUTH_CLIENT_SECRET=
 AZURE_OAUTH_TENANT_ID=
 ```
 
+Each provider is enabled only if all of its variables are set (Azure needs all three).
+Unset, empty and `your-...` placeholder values count as missing. If no provider is
+enabled, Superset falls back to plain `AUTH_DB`: the standard login page, username and
+password for every user, and the custom security manager is not loaded (so the
+admin-only rule does not apply). The startup log says which mode is active.
+
 Redirect URIs to register with each provider:
 
 - `https://<host>/oauth-authorized/google`

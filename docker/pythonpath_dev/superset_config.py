@@ -159,50 +159,70 @@ except ImportError:
 # If reverse proxy, set to true
 ENABLE_PROXY_FIX = True
 
-# Set the authentication type to OAuth
-from flask_appbuilder.security.manager import AUTH_OAUTH
-from custom_sso_security_manager import CustomSsoSecurityManager
+# SSO providers are enabled only when their credentials are set; with none, login
+# falls back to username/password only.
+from flask_appbuilder.security.manager import AUTH_DB, AUTH_OAUTH
 
-AUTH_TYPE = AUTH_OAUTH
 
-OAUTH_PROVIDERS = [
-    {
-        "name": "google",
-        "token_key": "access_token",
-        "icon": "fa-brands fa-google",
-        "remote_app": {
-            "client_id": os.getenv("GOOGLE_OAUTH_CLIENT_ID"),
-            "client_secret": os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
-            "client_kwargs": {"scope": "openid email profile"},
-            "api_base_url": "https://www.googleapis.com/oauth2/v2/",
-            "server_metadata_url": "https://accounts.google.com/.well-known/openid-configuration",
-        },
-    },
-    {
-        "name": "azure",
-        "token_key": "access_token",
-        "icon": "fa-brands fa-microsoft",
-        "remote_app": {
-            "client_id": os.getenv("AZURE_OAUTH_CLIENT_ID"),
-            "client_secret": os.getenv("AZURE_OAUTH_CLIENT_SECRET"),
-            "client_kwargs": {"scope": "openid email profile"},
-            "server_metadata_url": (
-                f"https://login.microsoftonline.com/{os.getenv('AZURE_OAUTH_TENANT_ID')}"
-                "/v2.0/.well-known/openid-configuration"
-            ),
-            # FAB validates the Entra id_token against these keys.
-            "jwks_uri": (
-                f"https://login.microsoftonline.com/{os.getenv('AZURE_OAUTH_TENANT_ID')}"
-                "/discovery/v2.0/keys"
-            ),
-        },
-    },
-]
+def _env(name):
+    """Return the variable, or None if unset, empty or an example placeholder."""
+    value = (os.getenv(name) or "").strip()
+    return None if not value or value.startswith("your-") else value
 
-# Disallow user registration, users must be created using superset fab create-user
-AUTH_USER_REGISTRATION = False
 
-# The default user self registration role (Gamma for dashboard view)
-AUTH_USER_REGISTRATION_ROLE = "Public"
+OAUTH_PROVIDERS = []
 
-CUSTOM_SECURITY_MANAGER = CustomSsoSecurityManager
+if _env("GOOGLE_OAUTH_CLIENT_ID") and _env("GOOGLE_OAUTH_CLIENT_SECRET"):
+    OAUTH_PROVIDERS.append(
+        {
+            "name": "google",
+            "token_key": "access_token",
+            "icon": "fa-brands fa-google",
+            "remote_app": {
+                "client_id": _env("GOOGLE_OAUTH_CLIENT_ID"),
+                "client_secret": _env("GOOGLE_OAUTH_CLIENT_SECRET"),
+                "client_kwargs": {"scope": "openid email profile"},
+                "api_base_url": "https://www.googleapis.com/oauth2/v2/",
+                "server_metadata_url": "https://accounts.google.com/.well-known/openid-configuration",
+            },
+        }
+    )
+
+if (
+    _env("AZURE_OAUTH_CLIENT_ID")
+    and _env("AZURE_OAUTH_CLIENT_SECRET")
+    and _env("AZURE_OAUTH_TENANT_ID")
+):
+    _azure_authority = (
+        f"https://login.microsoftonline.com/{_env('AZURE_OAUTH_TENANT_ID')}"
+    )
+    OAUTH_PROVIDERS.append(
+        {
+            "name": "azure",
+            "token_key": "access_token",
+            "icon": "fa-brands fa-microsoft",
+            "remote_app": {
+                "client_id": _env("AZURE_OAUTH_CLIENT_ID"),
+                "client_secret": _env("AZURE_OAUTH_CLIENT_SECRET"),
+                "client_kwargs": {"scope": "openid email profile"},
+                "server_metadata_url": (
+                    f"{_azure_authority}/v2.0/.well-known/openid-configuration"
+                ),
+                # FAB validates the Entra id_token against these keys.
+                "jwks_uri": f"{_azure_authority}/discovery/v2.0/keys",
+            },
+        }
+    )
+
+if OAUTH_PROVIDERS:
+    from custom_sso_security_manager import CustomSsoSecurityManager
+
+    AUTH_TYPE = AUTH_OAUTH
+    CUSTOM_SECURITY_MANAGER = CustomSsoSecurityManager
+    # Users are added in Superset; SSO never creates them.
+    AUTH_USER_REGISTRATION = False
+    AUTH_USER_REGISTRATION_ROLE = "Public"
+    logger.info("SSO enabled for: %s", ", ".join(p["name"] for p in OAUTH_PROVIDERS))
+else:
+    AUTH_TYPE = AUTH_DB
+    logger.warning("No OAuth credentials found; using username/password login only")
